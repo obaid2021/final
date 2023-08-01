@@ -750,7 +750,7 @@
         to be edited. Following are the steps that need to be performed:</p>
     <p><strong>Step 1:</strong> Open <strong>/etc/rc.conf</strong> file
         using <strong>vim/vi</strong> editor.</p>
-    <p><strong>Step 2:</strong> Add <strong>apache24_enable=”YES”</strong>
+    <p><strong>Step 2:</strong> Add <strong>apache24_enable=YES</strong>
         in <strong>rc.conf</strong> file.</p>
     <p>Some of the import directories related to Apache 2.4 in FreeBSD are
         as follows:</p>
@@ -966,7 +966,7 @@
     <p>The following lines need to be written in the file:</p>
     <p><strong>PATH=/usr/local/bin:$PATH</strong></p>
     <p><strong>csh -cf ‘/command/runsvdir -P /var/service
-            &amp;’</strong></p>
+             ’</strong></p>
     <p>The purpose of setting the <strong>Path</strong> in this file is to
         search the executables in <strong>/usr/local/bin</strong>.</p>
     <p>The <strong>csh -cf</strong> will invoke the C shell to run the
@@ -1072,20 +1072,13 @@
         <strong>ServerRoot</strong>. The following modules are loaded in the
         configuration file:
     </p>
-    <p><strong>LoadModule mpm_event_module
-            libexec/apache24/mod_mpm_event.so</strong></p>
-    <p><strong>LoadModule log_config_module
-            libexec/apache24/mod_log_config.so</strong></p>
-    <p><strong>LoadModule mime_module
-            libexec/apache24/mod_mime.so</strong></p>
-    <p><strong>LoadModule authz_core_module
-            libexec/apache24/mod_authz_core.so</strong></p>
-    <p><strong>LoadModule dir_module
-            libexec/apache24/mod_dir.so</strong></p>
-    <p><strong>LoadModule unixd_module
-            libexec/apache24/mod_unixd.so</strong></p>
-    <p><strong>LoadModule ssl_module
-            libexec/apache24/mod_ssl.so</strong></p>
+    <pre>LoadModule mpm_event_module libexec/apache24/mod_mpm_event.so
+LoadModule log_config_module libexec/apache24/mod_log_config.so
+LoadModule mime_module libexec/apache24/mod_mime.so
+LoadModule authz_core_module libexec/apache24/mod_authz_core.so
+LoadModule dir_module libexec/apache24/mod_dir.so
+LoadModule unixd_module libexec/apache24/mod_unixd.so
+LoadModule ssl_module libexec/apache24/mod_ssl.so</pre>
     <p>17.2.1 <strong>mpm_event_module</strong> The
         <strong>mpm_event_module</strong> in Apache is a clever way to handle
         many requests simultaneously, making websites faster and more
@@ -1097,7 +1090,7 @@
         threads to handle incoming requests. Additionally, there’s a special
         thread dedicated to listening for new connections.</p>
     <p>The event MPM is particularly good at dealing with the
-        <strong>“keep-alive problem”</strong> in HTTP. This means it can
+        <strong>keep-alive problem</strong> in HTTP. This means it can
         efficiently manage connections when clients want to keep the connection
         open after their first request. This efficient handling allows the
         server to serve more requests at the same time, enhancing overall
@@ -1121,9 +1114,9 @@
         handles the mapping of file extensions to MIME types. MIME types are
         used to indicate the type of data served by a web server, allowing
         clients (browsers) to interpret the content correctly. For example, when
-        a client requests a file like “example.jpg,” the mime_module maps the
-        “.jpg” extension to the corresponding MIME type for JPEG images (e.g.,
-        “image/jpeg”). This ensures that the client knows how to interpret and
+        a client requests a file like example.jpg, the mime_module maps the
+        .jpg extension to the corresponding MIME type for JPEG images (e.g.,
+        image/jpeg). This ensures that the client knows how to interpret and
         display the received content. The mime_module also provides a directive
         <strong>TypesConfig</strong> that is used to specify a file which also
         maps extension onto media types.
@@ -1199,12 +1192,13 @@
     </p>
     <p>17.7 <strong>DocumentRoot</strong> Next, we have following directives
         written in the configuration file:</p>
-    <p><strong>DocumentRoot “/usr/local/www/apache24/data”</strong></p>
-    <p><strong>DirectoryIndex index.html</strong></p>
-    <p><strong>&lt;Directrory
-            “/usr/local/www/apache24/data”&gt;</strong></p>
-    <p><strong>Require all granted</strong></p>
-    <p><strong></Directory></strong></p>
+    <pre>
+    DocumentRoot "/usr/local/www/apache24/data"
+    # Global DocumentRoot
+    DirectoryIndex index.html
+   -Directrory "/usr/local/www/apache24/data"-
+    Require all granted
+    </pre>
     <p>The <strong>DocumentRoot</strong> directive specifies the base
         directory form which Apache serves content for the main server. In this
         case, the root directory is set to
@@ -1239,27 +1233,26 @@
         </strong> twice for two different ports
         namely port <strong>80</strong> and port <strong>443</strong>.
     </p>
-    <p><strong>&lt;VirtualHost *:80&gt;</strong></p>
-    <p><strong>DocumentRoot “/usr/local/www/nike”</strong></p>
-    <p><strong>&lt;Directory “/usr/local/www/nike”&gt;</strong></p>
-    <p><strong>Options FollowSymlinks</strong></p>
-    <p><code></code><strong>AllowOverride AuthConfig</strong></p>
-    <p><code></code><strong></Directory></strong></p>
-    <p><strong>DirectoryIndex index.html</strong></p>
-    <p><strong></VirtualHost></strong></p>
-    <p><strong>&lt;VirtualHost *:443&gt;</strong></p>
-    <p><strong>DocumentRoot “/usr/local/www/nike”</strong></p>
-    <p><strong>&lt;Directory “/usr/local/www/nike”&gt;</strong></p>
-    <p><strong>Options FollowSymlinks</strong></p>
-    <p><strong>AllowOverride AuthConfig</strong></p>
-    <p><strong></Directory></strong></p>
-    <p><strong>DirectoryIndex index.html</strong></p>
-    <p><strong>SSLCertificateFile “/root/FreeBSD_ECCert.pem”</strong></p>
-    <p><strong>SSLCertificateKeyFile “/root/FreeBSD_ECCkey.pem”</strong></p>
-    <p><strong></VirtualHost></strong></p>
-    <p>The <strong>
-            <VirtualHost>
-        </strong> sections for <strong>port
+    <pre>-VirtualHost *:80-
+DocumentRoot "/usr/local/www/nike"
+<Directory "/usr/local/www/nike">
+Options FollowSymlinks
+AllowOverride AuthConfig
+</Directory>
+DirectoryIndex index.html
+-/VirtualHost-
+
+-VirtualHost *:443
+DocumentRoot "/usr/local/www/nike"
+<Directory "/usr/local/www/nike">
+Options FollowSymlinks
+AllowOverride AuthConfig
+</Directory>
+DirectoryIndex index.html
+SSLCertificateFile "/root/FreeBSD_ECCert.pem"
+SSLCertificateKeyFile "/root/FreeBSD_ECCkey.pem"
+-/VirtualHost-</pre>
+         sections for <strong>port
             80</strong> and <strong>443</strong> are quite similar to each other. As
         mentioned before, port 80 is a default port for <strong>HTTP</strong>
         and is used for unencrypted web traffic and port <strong>443</strong> is
@@ -1385,7 +1378,7 @@ CustomLog "/var/log/apache24/access.log" combined
     <p>First the make_CA.sh was made executable and then executed in order
         to generate a Root Certificate using the OpenSSL command line tool so
         that we can become a Certificate Authority ourselves and creation of
-        Public/Private Key pair is done to sign the certificates. 1. ####
+        Public/Private Key pair is done to sign the certificates. 1. #
         <code></code><strong>make_CA.sh Script</strong> The following is a brief
         description of the various commands used in this file:
     </p>
@@ -1428,7 +1421,7 @@ CustomLog "/var/log/apache24/access.log" combined
         created using the Server.cfg file in the previous step (CSR contains
         public key and desired attributes for web server certificate), it is
         then used in conjunction with server.cfg to create a self-signed X.509
-        certificate, which is then signed using the RootCA’s Private key, to
+        certificate, which is then signed using the RootCAs Private key, to
         enable HTTPS connection.</p>
     <p>First, we made the Make_server.sh executable by executing the
         following command:</p>
@@ -1483,16 +1476,18 @@ CustomLog "/var/log/apache24/access.log" combined
     <p>This command is useful for inspecting the details of an X.509
         certificate, including the certificate’s subject, issuer, validity
         dates, public key details, extensions, and other relevant information.
+     </p>
+     <p>
         18.7 <strong>Trust Chain</strong> Finally in order to establish a Trust
         Chain Integration, once the SSL certificate is generated, we need to add
         the following files in the Httpd.conf:</p>
-    <p><strong>SSLCertificateFile “/root/Server_ECCert.pem”</strong></p>
+    <p><strong>SSLCertificateFile /root/Server_ECCert.pem</strong></p>
     <p>This directive specifies the path to the SSL certificate file (e.g.,
         labpc107_ECCert.pem) that you obtained or generated for your server. The
-        certificate file contains the public key, the server’s identity, and the
+        certificate file contains the public key, the servers identity, and the
         signature created by the private key. Apache uses this certificate to
         identify itself to clients during the SSL/TLS handshake.</p>
-    <p><strong>SSLCertificateKeyFile “/root/Server_ECCkey.pem”</strong></p>
+    <p><strong>SSLCertificateKeyFile /root/Server_ECCkey.pem</strong></p>
     <p>This directive specifies the path to the SSL certificate’s private
         key file (e.g., labpc107_ECCkey.pem). The private key is used to decrypt
         encrypted data received from clients and to sign data sent to clients.</p>
@@ -1524,8 +1519,8 @@ CustomLog "/var/log/apache24/access.log" combined
         requests and responses made to the web server.
     </p>
     <p><strong>&lt;IfModule log_config_module&gt;</strong></p>
-    <p><code></code><strong>LogFormat “%h %l %u %t "%r" %&gt;s %b
-            "%{Referer}i" "%{User-agent}i"” combined</strong></p>
+    <pre>LogFormat %h %l %u %t "%r" %&gt;s %b
+            "%{Referer}i %{User-agent}i"” combined</strong></pre>
     <p><code></code><strong>LogFormat “%h %l %u %t "%r" %&gt;s %b”
             common</strong></p>
     <p><code></code><strong>CustomLog ”/var/log/apache24/access.log”
