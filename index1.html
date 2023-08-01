@@ -343,10 +343,15 @@
     <p><strong>Superuser accounts,</strong> which is the root account has
         the privilege to manage the system with no limitations. It must be used
         with much care as one slight change in the command or in any file can
-        alter the system. 
-        <h2 id="accounts-management"><strong>Accounts Management</strong></h2>
-        In FreeBSD different commands are used to manage the accounts. Here are some useful
-        commands in user account management:</p>
+        alter the system. </p>
+        <ul>
+        <li>
+        <h2 id="accounts-management">
+        <strong>Accounts Management</strong></h2>  
+        </li>
+        </ul>
+        <p>In FreeBSD different commands are used to manage the accounts. Here are some useful
+        commands in user account management:</p>    
     <table>
         <colgroup>
             <col style="width: 50%" />
@@ -391,6 +396,7 @@
             </tr>
         </tbody>
     </table>
+    
     <ol start="9" type="1">
         <li>
             <h2 id="group-management"><strong>Group Management</strong></h2>
@@ -805,8 +811,11 @@
         <strong>Supervision</strong> Runit monitors the running services
         continuously and makes sure that they keep running. If a service stops,
         Runit automatically restarts it, which makes it crash resilient. 
+        <ul>
+        <li>
         <h2 id="utilities-runit"><strong>Utilities in Runit Tool</strong></h2>
-         
+        </li>
+        </ul> 
         14.1. <strong>runsv</strong>
         runsv starts and monitors a service (must be a directory). runsv
         switches to the directory and starts the run script. It maintains status
@@ -1279,67 +1288,62 @@
     </p>
     <p>Apache HTTP server is also configured for logging. Logging part of
         the httpd.conf file is discussed later in this documentation.</p>
-    <p>Now here is a look at the httpd.conf file. 17.9 <strong>httpd.conf
-            File Content</strong> <strong># ServerRoot is the starting point for
+    <p>Now here is a look at the httpd.conf file. </p>
+            17.9 <strong>httpd.conf
+            <p>File Content</strong> <strong># ServerRoot is the starting point for
             loading the modules</strong></p>
-    <p>ServerRoot “usr/local/</p>
-    <p>ServerName FreeBSD</p>
-    <p>LoadModule mpm_event_module libexec/apache24/mod_mpm_event.so</p>
-    <p>LoadModule log_config_module libexec/apache24/mod_log_config.so</p>
-    <p>LoadModule mime_module libexec/apache24/mod_mime.so</p>
-    <p>LoadModule authz_core_module libexec/apache24/mod_authz_core.so</p>
-    <p>LoadModule dir_module libexec/apache24/mod_dir.so</p>
-    <p>LoadModule unixd_module libexec/apache24/mod_unixd.so</p>
-    <p>LoadModule ssl_module libexec/apache24/mod_ssl.so</p>
-    <p><strong># Setuid user and group</strong></p>
-    <p>User www</p>
-    <p>Group www</p>
-    <p><strong># Listener</strong></p>
-    <p>Listen 80</p>
-    <p>Listen 443</p>
-    <p>DocumentRoot “/usr/local/www/apache24/data”</p>
-    <p><strong># Global DocumentRoot</strong></p>
-    <p>DirectoryIndex index.html</p>
-    <p>&lt;Directrory “/usr/local/www/apache24/data”&gt;</p>
-    <p>Require all granted</p>
-    <p>
-        </Directory>
-    </p>
-    <p>&lt;VirtualHost *:80&gt;</p>
-    <p>DocumentRoot “/usr/local/www/nike”</p>
-    <p>&lt;Directory “/usr/local/www/nike”&gt;</p>
-    <p>Options FollowSymlinks</p>
-    <p><code></code>AllowOverride AuthConfig</p>
-    <p><code></code></Directory>
-    </p>
-    <p>DirectoryIndex index.html</p>
-    <p>
-        </VirtualHost>
-    </p>
-    <p>&lt;VirtualHost *:443&gt;</p>
-    <p>DocumentRoot “/usr/local/www/nike”</p>
-    <p>&lt;Directory “/usr/local/www/nike”&gt;</p>
-    <p>Options FollowSymlinks</p>
-    <p>AllowOverride AuthConfig</p>
-    <p>
-        </Directory>
-    </p>
-    <p>DirectoryIndex index.html</p>
-    <p>SSLCertificateFile “/root/FreeBSD_ECCert.pem”</p>
-    <p>SSLCertificateKeyFile “/root/FreeBSD_ECCkey.pem”</p>
-    <p>
-        </VirtualHost>
-    </p>
-    <p>ErrorLog “/var/log/apache24/error.log“</p>
-    <p>LogLevel debug</p>
-    <p>&lt;IfModule log_config_module&gt;</p>
-    <p>LogFormat “%h %l %u %t "%r" %&gt;s %b "%{Referer}i" "%{User-agent}i"”
-        combined</p>
-    <p>LogFormat “%h %l %u %t "%r" %&gt;s %b” common</p>
-    <p>CustomLog “/var/log/apache24/access.log” combined</p>
-    <p>
-        </IfModule>
-    </p>
+    <pre>
+# ServerRoot is the starting point for loading the modules 
+ServerRoot "usr/local/
+ServerName FreeBSD
+LoadModule mpm_event_module libexec/apache24/mod_mpm_event.so
+LoadModule log_config_module libexec/apache24/mod_log_config.so
+LoadModule mime_module libexec/apache24/mod_mime.so
+LoadModule authz_core_module libexec/apache24/mod_authz_core.so
+LoadModule dir_module libexec/apache24/mod_dir.so
+LoadModule unixd_module libexec/apache24/mod_unixd.so
+LoadModule ssl_module libexec/apache24/mod_ssl.so
+# Setuid user and group
+User www
+Group www
+# Listener
+Listen 80
+Listen 443
+DocumentRoot "/usr/local/www/apache24/data"
+# Global DocumentRoot
+DirectoryIndex index.html
+<Directrory "/usr/local/www/apache24/data">
+Require all granted
+</Directory>
+<VirtualHost *:80>
+DocumentRoot "/usr/local/www/nike"
+<Directory "/usr/local/www/nike">
+Options FollowSymlinks
+AllowOverride AuthConfig
+</Directory>
+DirectoryIndex index.html
+</VirtualHost>
+
+<VirtualHost *:443>
+DocumentRoot "/usr/local/www/nike"
+<Directory "/usr/local/www/nike">
+Options FollowSymlinks
+AllowOverride AuthConfig
+</Directory>
+DirectoryIndex index.html
+SSLCertificateFile "/root/FreeBSD_ECCert.pem"
+SSLCertificateKeyFile "/root/FreeBSD_ECCkey.pem"
+</VirtualHost>
+
+ErrorLog "/var/log/apache24/error.log"
+LogLevel debug
+
+<IfModule log_config_module>
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined
+LogFormat "%h %l %u %t \"%r\" %>s %b" common
+CustomLog "/var/log/apache24/access.log" combined
+</IfModule>
+</pre>
     <ol start="18" type="1">
         <li>
             <h2 id="ssl-certificates"><strong>SSL
@@ -1491,13 +1495,19 @@
     <p><strong>SSLCertificateKeyFile “/root/Server_ECCkey.pem”</strong></p>
     <p>This directive specifies the path to the SSL certificate’s private
         key file (e.g., labpc107_ECCkey.pem). The private key is used to decrypt
-        encrypted data received from clients and to sign data sent to clients.
-        <h2 id="logging"><strong>Logging</strong></h2>
-         Logging is an important part of any web
+        encrypted data received from clients and to sign data sent to clients.</p>
+         <ul>
+         <li>
+         <h2 id="logging"><strong>Logging</strong></h2>
+         </ul>
+         </li>
+         <p>Logging is an important part of any web
         server. Similarly, Apache server also makes logs for the successful
         client requests in the form of access logs and all error events in the
         form of error log. One can use these logs in case of any troubleshooting
-        or maintenance. 19.1 <strong>Access Log</strong> The server access log
+        or maintenance.</p> 
+        19.1 <strong>Access Log</strong> 
+        <p>The server access log
         records all requests processed by the server. The location and content
         of the access log are controlled by the <strong>CustomLog</strong>
         directive. The format of the access log is highly configurable. The
@@ -1567,7 +1577,9 @@
         <strong>access.log</strong> file to <strong>/var/log/apache24/.
             Common</strong> or <strong>Combined</strong> at the end will specify the
         format of the entries that will be made by Apache Server to the access
-        file. 19.4 <strong>Error Log</strong> Similar to access logs, we will
+        file.</p> 
+        19.4 <strong>Error Log</strong> 
+         <p>Similar to access logs, we will
         add the following line in httpd.conf file to make the error logs of the
         Apache Server:
     </p>
@@ -1598,7 +1610,11 @@
     </ul>
     <p>We have used the <strong>LogLevel debug</strong> in our
         <strong>httpd.conf</strong> file. 
+         <ul>
+         <li>
         <h2 id="log-rotation"><strong>Log Rotation</strong></h2>
+         </ul>
+         </li>
         Log rotation in FreeBSD is the process in which log files are managed in
         such a way that it prevents them from becoming too large. To make the
         logs manageable and organized on the system where logging activity is
