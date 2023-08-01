@@ -1312,19 +1312,20 @@ Listen 443
 DocumentRoot "/usr/local/www/apache24/data"
 # Global DocumentRoot
 DirectoryIndex index.html
-<Directrory "/usr/local/www/apache24/data">
+-Directrory "/usr/local/www/apache24/data"-
 Require all granted
-</Directory>
-<VirtualHost *:80>
+-/Directory-
+
+-VirtualHost *:80-
 DocumentRoot "/usr/local/www/nike"
 <Directory "/usr/local/www/nike">
 Options FollowSymlinks
 AllowOverride AuthConfig
 </Directory>
 DirectoryIndex index.html
-</VirtualHost>
+-/VirtualHost-
 
-<VirtualHost *:443>
+-VirtualHost *:443
 DocumentRoot "/usr/local/www/nike"
 <Directory "/usr/local/www/nike">
 Options FollowSymlinks
@@ -1333,16 +1334,16 @@ AllowOverride AuthConfig
 DirectoryIndex index.html
 SSLCertificateFile "/root/FreeBSD_ECCert.pem"
 SSLCertificateKeyFile "/root/FreeBSD_ECCkey.pem"
-</VirtualHost>
+-/VirtualHost-
 
 ErrorLog "/var/log/apache24/error.log"
 LogLevel debug
 
-<IfModule log_config_module>
+-IfModule log_config_module-
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
 CustomLog "/var/log/apache24/access.log" combined
-</IfModule>
+-/IfModule-
 </pre>
     <ol start="18" type="1">
         <li>
@@ -1464,8 +1465,7 @@ CustomLog "/var/log/apache24/access.log" combined
         validity period of the self-signed certificate to 365 days (1 year). The
         <strong>-in ${HOST}.csr</strong> specifies the input CSR file (generated
         in the second step) that provides the subject information for the
-        certificate. The <strong>-out <span
-                class="math inline"><em>C</em><em>E</em><em>R</em><em>T</em> *  * <em>s</em><em>p</em><em>e</em><em>c</em><em>i</em><em>f</em><em>i</em><em>e</em><em>s</em><em>t</em><em>h</em><em>e</em><em>o</em><em>u</em><em>t</em><em>p</em><em>u</em><em>t</em><em>f</em><em>i</em><em>l</em><em>e</em><em>n</em><em>a</em><em>m</em><em>e</em><em>f</em><em>o</em><em>r</em><em>t</em><em>h</em><em>e</em><em>s</em><em>e</em><em>l</em><em>f</em> − <em>s</em><em>i</em><em>g</em><em>n</em><em>e</em><em>d</em><em>c</em><em>e</em><em>r</em><em>t</em><em>i</em><em>f</em><em>i</em><em>c</em><em>a</em><em>t</em><em>e</em>.<em>T</em><em>h</em><em>e</em> * *</span>{CERT}</strong>
+        certificate. The <strong>-out {CERT}</strong>
         is a variable representing the name of the certificate, so
         <strong>${CERT}</strong> is the certificate file.
     </p>
